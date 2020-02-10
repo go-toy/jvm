@@ -4,21 +4,17 @@ import (
 	"fmt"
 	"github.com/go-toy/jvm/instructions"
 	"github.com/go-toy/jvm/instructions/base"
+	"github.com/go-toy/jvm/rtda/heap"
 )
 
-import "github.com/go-toy/jvm/classfile"
 import "github.com/go-toy/jvm/rtda"
 
-func interpret(methodInfo *classfile.MemberInfo) {
-	codeAttr := methodInfo.CodeAttribute()
-	maxLocals := codeAttr.MaxLocals()
-	maxStack := codeAttr.MaxStack()
-	bytecode := codeAttr.Code()
+func interpret(method *heap.Method) {
 	thread := rtda.NewThread()
-	frame := thread.NewFrame(uint(maxLocals), uint(maxStack))
+	frame := thread.NewFrame(method)
 	thread.PushFrame(frame)
 	defer catchErr(frame)
-	loop(thread, bytecode)
+	loop(thread, method.Code())
 }
 
 func catchErr(frame *rtda.Frame) {
