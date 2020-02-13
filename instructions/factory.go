@@ -1,11 +1,11 @@
 package instructions
 
+import . "github.com/go-toy/jvm/instructions/control"
 import (
 	"fmt"
 	"github.com/go-toy/jvm/instructions/base"
 	"github.com/go-toy/jvm/instructions/comparisons"
 	"github.com/go-toy/jvm/instructions/constants"
-	"github.com/go-toy/jvm/instructions/control"
 	"github.com/go-toy/jvm/instructions/conversions"
 	"github.com/go-toy/jvm/instructions/extended"
 	"github.com/go-toy/jvm/instructions/loads"
@@ -153,12 +153,12 @@ var (
 	fcmpg   = &comparisons.FCMPG{}
 	dcmpl   = &comparisons.DCMPL{}
 	dcmpg   = &comparisons.DCMPG{}
-	// ireturn = &IRETURN{}
-	// lreturn = &LRETURN{}
-	// freturn = &FRETURN{}
-	// dreturn = &DRETURN{}
-	// areturn = &ARETURN{}
-	_return = &control.RETURN{}
+	ireturn = &IRETURN{}
+	lreturn = &LRETURN{}
+	freturn = &FRETURN{}
+	dreturn = &DRETURN{}
+	areturn = &ARETURN{}
+	_return = &RETURN{}
 	// arraylength   = &ARRAY_LENGTH{}
 	// athrow        = &ATHROW{}
 	// monitorenter  = &MONITOR_ENTER{}
@@ -503,25 +503,25 @@ func NewInstruction(opcode byte) base.Instruction {
 	case 0xa6:
 		return &comparisons.IF_ACMPNE{}
 	case 0xa7:
-		return &control.GOTO{}
+		return &GOTO{}
 	// case 0xa8:
 	// 	return &JSR{}
 	// case 0xa9:
 	// 	return &RET{}
 	case 0xaa:
-		return &control.TABLE_SWITCH{}
+		return &TABLE_SWITCH{}
 	case 0xab:
-		return &control.LOOKUP_SWITCH{}
-	// case 0xac:
-	// 	return ireturn
-	// case 0xad:
-	// 	return lreturn
-	// case 0xae:
-	// 	return freturn
-	// case 0xaf:
-	// 	return dreturn
-	// case 0xb0:
-	// 	return areturn
+		return &LOOKUP_SWITCH{}
+	case 0xac:
+		return ireturn
+	case 0xad:
+		return lreturn
+	case 0xae:
+		return freturn
+	case 0xaf:
+		return dreturn
+	case 0xb0:
+		return areturn
 	case 0xb1:
 		return _return
 	case 0xb2:
@@ -536,10 +536,10 @@ func NewInstruction(opcode byte) base.Instruction {
 		return &references.INVOKE_VIRTUAL{}
 	case 0xb7:
 		return &references.INVOKE_SPECIAL{}
-	// case 0xb8:
-	// 	return &INVOKE_STATIC{}
-	// case 0xb9:
-	// 	return &INVOKE_INTERFACE{}
+	case 0xb8:
+		return &references.INVOKE_STATIC{}
+	case 0xb9:
+		return &references.INVOKE_INTERFACE{}
 	// case 0xba:
 	// 	return &INVOKE_DYNAMIC{}
 	case 0xbb:

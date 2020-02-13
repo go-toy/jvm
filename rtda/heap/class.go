@@ -19,6 +19,7 @@ type Class struct {
 	instanceSlotCount uint
 	staticSlotCount   uint
 	staticVars        Slots
+	initStarted       bool
 }
 
 func newClass(cf *classfile.ClassFile) *Class {
@@ -31,6 +32,14 @@ func newClass(cf *classfile.ClassFile) *Class {
 	class.fields = newFields(class, cf.Fields())
 	class.methods = newMethods(class, cf.Methods())
 	return class
+}
+
+func (self *Class) InitStarted() bool {
+	return self.initStarted
+}
+
+func (self *Class) StartInit() {
+	self.initStarted = true
 }
 
 func (self *Class) IsPublic() bool {
@@ -111,4 +120,23 @@ func (self *Class) getStaticMethod(name, descriptor string) *Method {
 		}
 	}
 	return nil
+}
+
+func (self *Class) GetPackageName() string {
+	if i := strings.LastIndex(self.name, "/"); i >= 0 {
+		return self.name[:i]
+	}
+	return ""
+}
+
+func (self *Class) GetClinitMethod() *Method {
+	return self.getStaticMethod("<clinit>", "()V")
+}
+
+func (self *Class) SuperClass() *Class {
+	return self.superClass
+}
+
+func (self *Class) Name() string {
+	return self.name
 }
