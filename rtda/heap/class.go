@@ -97,18 +97,6 @@ func (self *Class) StaticVars() Slots {
 	return self.staticVars
 }
 
-func (self *Class) isAssignableFrom(other *Class) bool {
-	s, t := other, self
-	if s == t {
-		return true
-	}
-	if !t.IsInterface() {
-		return s.isSubClassOf(t)
-	} else {
-		return s.isImplements(t)
-	}
-}
-
 func (self *Class) GetMainMethod() *Method {
 	return self.getStaticMethod("main", "([Ljava/lang/String;)V")
 }
@@ -139,4 +127,36 @@ func (self *Class) SuperClass() *Class {
 
 func (self *Class) Name() string {
 	return self.name
+}
+
+func (self *Class) Loader() *ClassLoader {
+	return self.loader
+}
+
+func (self *Class) ArrayClass() *Class {
+	arrayClassName := getArrayClassName(self.name)
+	return self.loader.LoadClass(arrayClassName)
+}
+
+func (self *Class) isJlObject() bool {
+	return self.name == "java/lang/Object"
+}
+
+func (self *Class) isJlCloneable() bool {
+	return self.name == "java/lang/Cloneable"
+}
+
+func (self *Class) isJioSerializable() bool {
+	return self.name == "java/io/Serializable"
+}
+
+func (self *Class) getField(name string, descriptor string, isStatic bool) *Field {
+	for c := self; c != nil; c = c.superClass {
+		for _, field := range c.fields {
+			if field.IsStatic() == isStatic && field.name == name && field.descriptor == descriptor {
+				return field
+			}
+		}
+	}
+	return nil
 }
