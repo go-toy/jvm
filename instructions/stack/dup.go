@@ -3,9 +3,7 @@ package stack
 import "github.com/go-toy/jvm/instructions/base"
 import "github.com/go-toy/jvm/rtda"
 
-type DUP struct {
-	base.NoOperandsInstruction
-}
+type DUP struct{ base.NoOperandsInstruction }
 
 func (self *DUP) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -14,9 +12,7 @@ func (self *DUP) Execute(frame *rtda.Frame) {
 	stack.PushSlot(slot)
 }
 
-type DUP_X1 struct {
-	base.NoOperandsInstruction
-}
+type DUP_X1 struct{ base.NoOperandsInstruction }
 
 func (self *DUP_X1) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -27,9 +23,7 @@ func (self *DUP_X1) Execute(frame *rtda.Frame) {
 	stack.PushSlot(slot1)
 }
 
-type DUP_X2 struct {
-	base.NoOperandsInstruction
-}
+type DUP_X2 struct{ base.NoOperandsInstruction }
 
 func (self *DUP_X2) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -42,9 +36,7 @@ func (self *DUP_X2) Execute(frame *rtda.Frame) {
 	stack.PushSlot(slot1)
 }
 
-type DUP2 struct {
-	base.NoOperandsInstruction
-}
+type DUP2 struct{ base.NoOperandsInstruction }
 
 func (self *DUP2) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -56,9 +48,7 @@ func (self *DUP2) Execute(frame *rtda.Frame) {
 	stack.PushSlot(slot1)
 }
 
-type DUP2_X1 struct {
-	base.NoOperandsInstruction
-}
+type DUP2_X1 struct{ base.NoOperandsInstruction }
 
 func (self *DUP2_X1) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -72,9 +62,7 @@ func (self *DUP2_X1) Execute(frame *rtda.Frame) {
 	stack.PushSlot(slot1)
 }
 
-type DUP2_X2 struct {
-	base.NoOperandsInstruction
-}
+type DUP2_X2 struct{ base.NoOperandsInstruction }
 
 func (self *DUP2_X2) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -89,3 +77,4 @@ func (self *DUP2_X2) Execute(frame *rtda.Frame) {
 	stack.PushSlot(slot2)
 	stack.PushSlot(slot1)
 }
+

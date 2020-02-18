@@ -5,9 +5,7 @@ import (
 )
 import "github.com/go-toy/jvm/rtda"
 
-type I2B struct {
-	base.NoOperandsInstruction
-}
+type I2B struct{ base.NoOperandsInstruction }
 
 func (self *I2B) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -16,9 +14,7 @@ func (self *I2B) Execute(frame *rtda.Frame) {
 	stack.PushInt(b)
 }
 
-type I2C struct {
-	base.NoOperandsInstruction
-}
+type I2C struct{ base.NoOperandsInstruction }
 
 func (self *I2C) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -27,9 +23,7 @@ func (self *I2C) Execute(frame *rtda.Frame) {
 	stack.PushInt(c)
 }
 
-type I2S struct {
-	base.NoOperandsInstruction
-}
+type I2S struct{ base.NoOperandsInstruction }
 
 func (self *I2S) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -38,9 +32,17 @@ func (self *I2S) Execute(frame *rtda.Frame) {
 	stack.PushInt(s)
 }
 
-type I2F struct {
-	base.NoOperandsInstruction
+type I2L struct{ base.NoOperandsInstruction }
+
+func (self *I2L) Execute(frame *rtda.Frame) {
+	stack := frame.OperandStack()
+	i := stack.PopInt()
+	l := int64(i)
+	stack.PushLong(l)
 }
+
+// Convert int to float
+type I2F struct{ base.NoOperandsInstruction }
 
 func (self *I2F) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -49,24 +51,12 @@ func (self *I2F) Execute(frame *rtda.Frame) {
 	stack.PushFloat(f)
 }
 
-type I2D struct {
-	base.NoOperandsInstruction
-}
+// Convert int to double
+type I2D struct{ base.NoOperandsInstruction }
 
 func (self *I2D) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	i := stack.PopInt()
 	d := float64(i)
 	stack.PushDouble(d)
-}
-
-type I2L struct {
-	base.NoOperandsInstruction
-}
-
-func (self *I2L) Execute(frame *rtda.Frame) {
-	stack := frame.OperandStack()
-	i := stack.PopInt()
-	l := int64(i)
-	stack.PushLong(l)
 }

@@ -43,7 +43,7 @@ func (self *PUT_STATIC) Execute(frame *rtda.Frame) {
 		slots.SetLong(slotId, stack.PopLong())
 	case 'D':
 		slots.SetDouble(slotId, stack.PopDouble())
-	case 'L':
+	case 'L', '[':
 		slots.SetRef(slotId, stack.PopRef())
 	}
 }

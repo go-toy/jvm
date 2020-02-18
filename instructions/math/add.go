@@ -5,21 +5,18 @@ import (
 )
 import "github.com/go-toy/jvm/rtda"
 
-type DADD struct {
-	base.NoOperandsInstruction
-}
+type DADD struct{ base.NoOperandsInstruction }
 
 func (self *DADD) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
-	v2 := stack.PopDouble()
 	v1 := stack.PopDouble()
+	v2 := stack.PopDouble()
 	result := v1 + v2
 	stack.PushDouble(result)
 }
 
-type FADD struct {
-	base.NoOperandsInstruction
-}
+// Add float
+type FADD struct{ base.NoOperandsInstruction }
 
 func (self *FADD) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -29,9 +26,8 @@ func (self *FADD) Execute(frame *rtda.Frame) {
 	stack.PushFloat(result)
 }
 
-type IADD struct {
-	base.NoOperandsInstruction
-}
+// Add int
+type IADD struct{ base.NoOperandsInstruction }
 
 func (self *IADD) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
@@ -41,9 +37,8 @@ func (self *IADD) Execute(frame *rtda.Frame) {
 	stack.PushInt(result)
 }
 
-type LADD struct {
-	base.NoOperandsInstruction
-}
+// Add long
+type LADD struct{ base.NoOperandsInstruction }
 
 func (self *LADD) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()

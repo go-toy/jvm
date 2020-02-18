@@ -3,6 +3,15 @@ package heap
 type Object struct {
 	class *Class
 	data  interface{}
+	extra interface{}
+}
+
+func (self *Object) Extra() interface{} {
+	return self.extra
+}
+
+func (self *Object) SetExtra(extra interface{}) {
+	self.extra = extra
 }
 
 func (self *Object) Fields() Slots {

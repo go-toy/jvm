@@ -6,17 +6,13 @@ import (
 	"github.com/go-toy/jvm/rtda/heap"
 )
 
-type LDC struct {
-	base.Index8Instruction
-}
+type LDC struct{ base.Index8Instruction }
 
 func (self *LDC) Execute(frame *rtda.Frame) {
 	_ldc(frame, self.Index)
 }
 
-type LDC_W struct {
-	base.Index16Instruction
-}
+type LDC_W struct{ base.Index16Instruction }
 
 func (self *LDC_W) Execute(frame *rtda.Frame) {
 	_ldc(frame, self.Index)
@@ -25,8 +21,8 @@ func (self *LDC_W) Execute(frame *rtda.Frame) {
 func _ldc(frame *rtda.Frame, index uint) {
 	stack := frame.OperandStack()
 	class := frame.Method().Class()
-	cp := class.ConstantPool()
-	c := cp.GetConstant(index)
+	c := class.ConstantPool().GetConstant(index)
+
 	switch c.(type) {
 	case int32:
 		stack.PushInt(c.(int32))
@@ -35,19 +31,22 @@ func _ldc(frame *rtda.Frame, index uint) {
 	case string:
 		internedStr := heap.JString(class.Loader(), c.(string))
 		stack.PushRef(internedStr)
+	case *heap.ClassRef:
+		classRef := c.(*heap.ClassRef)
+		classObj := classRef.ResolvedClass().JClass()
+		stack.PushRef(classObj)
 	default:
 		panic("todo: ldc!")
 	}
 }
 
-type LDC2_W struct {
-	base.Index16Instruction
-}
+type LDC2_W struct{ base.Index16Instruction }
 
 func (self *LDC2_W) Execute(frame *rtda.Frame) {
 	stack := frame.OperandStack()
 	cp := frame.Method().Class().ConstantPool()
 	c := cp.GetConstant(self.Index)
+
 	switch c.(type) {
 	case int64:
 		stack.PushLong(c.(int64))
